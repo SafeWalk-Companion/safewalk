@@ -19,4 +19,7 @@ s 5c67e61 fix: [KAN-101] Remove deprecated service
 
 ### Code Conventions
 
-This section will include code conventions. These should be followed in order to guarantee consistency.
+The following section defines various code conventions to be followed when working in this repository. 
+
+- Code and comments are to be written in English.
+- more to be defined
