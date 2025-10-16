@@ -16,3 +16,7 @@ s 5c67e61 fix: [KAN-101] Remove deprecated service
 ```
 3. Create a PR for every merge to main. At least one review by one of the code owner's is required to merge to main. 
 4. All pipelines must run successfully for a PR to be merged.
+
+### Code Conventions
+
+This section will include code conventions.
