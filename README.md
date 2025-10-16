@@ -19,4 +19,4 @@ s 5c67e61 fix: [KAN-101] Remove deprecated service
 
 ### Code Conventions
 
-This section will include code conventions.
+This section will include code conventions. These should be followed in order to guarantee consistency.
