@@ -1,5 +1,5 @@
 # SafeWalk
-SafeWalk's main repository containing both the code for Backend and Frontend.
+SafeWalk's main repository containing the SafeWalk Platform.
 
 ## Ways of Working
 
