@@ -1,0 +1,7 @@
+﻿services:
+  safewalk.platform:
+    image: safewalk.platform
+    build:
+      context: .
+      dockerfile: SafeWalk.Platform/Dockerfile
+
