@@ -34,21 +34,24 @@ runs:
           echo "error_message=" >> $GITHUB_OUTPUT
         else
           echo "Title does not match conventional commit format"
-          ERROR_MSG="Title does not match required conventional commit format. Expected format: <type>[(scope)]: [KAN-XXX] <description>
-
-Examples:
-  - feat: [KAN-123] Add new feature
-  - fix(api): [KAN-456] Fix authentication bug
-  - docs: Update README
-  - chore(deps): Update dependencies
-
-Valid types: build, chore, ci, config, docs, feat, fix, perf, refactor, revert, style, test
-Scope: Optional, alphanumeric
-Kanban reference: Optional, format [KAN-XXX]"
           
           echo "valid=false" >> $GITHUB_OUTPUT
-          echo "error_message<<EOF" >> $GITHUB_OUTPUT
-          echo "$ERROR_MSG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          {
+            echo "error_message<<EOF"
+            echo "Title does not match required conventional commit format."
+            echo ""
+            echo "Expected format: <type>[(scope)]: [KAN-XXX] <description>"
+            echo ""
+            echo "Examples:"
+            echo "  - feat: [KAN-123] Add new feature"
+            echo "  - fix(api): [KAN-456] Fix authentication bug"
+            echo "  - docs: Update README"
+            echo "  - chore(deps): Update dependencies"
+            echo ""
+            echo "Valid types: build, chore, ci, config, docs, feat, fix, perf, refactor, revert, style, test"
+            echo "Scope: Optional, alphanumeric"
+            echo "Kanban reference: Optional, format [KAN-XXX]"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
           exit 1
         fi
