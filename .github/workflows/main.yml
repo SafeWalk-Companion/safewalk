@@ -1,4 +1,4 @@
-name: Check Title Format
+name: CI
 
 on:
   pull_request:
@@ -10,8 +10,25 @@ permissions:
   id-token: write # This is required for requesting the JWT (OIDC)
   contents: read # This is required for actions/checkout
   actions: read
+  pull-requests: write # Required for commenting on PRs
 
 jobs:
+  build-platform:
+    name: Build SafeWalk.Platform
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build SafeWalk.Platform
+        uses: ./.github/workflows/actions/build-platform
+        with:
+          dotnet-version: '9.0.x'
+          configuration: 'Release'
+          solution-path: 'SafeWalk.Platform/SafeWalk.Platform.sln'
+
   check-pr-title:
     name: Check PR Title
     runs-on: ubuntu-latest
