@@ -1,0 +1,54 @@
+name: 'Check Title Format'
+description: 'Validates PR and commit titles against conventional commit format with optional Kanban ticket reference'
+inputs:
+  title:
+    description: 'The title to check (PR title or commit message)'
+    required: true
+  regex:
+    description: 'Regular expression pattern to validate the title against'
+    required: false
+    default: '^(build|chore|ci|config|docs|feat|fix|perf|refactor|revert|style|test)(\([a-zA-Z0-9]+\))?: ?(\[KAN-\d+\] )?(.+)$'
+outputs:
+  valid:
+    description: 'Whether the title is valid (true/false)'
+    value: ${{ steps.check.outputs.valid }}
+  error_message:
+    description: 'Error message if validation fails'
+    value: ${{ steps.check.outputs.error_message }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Validate Title Format
+      id: check
+      shell: bash
+      run: |
+        TITLE="${{ inputs.title }}"
+        REGEX="${{ inputs.regex }}"
+        
+        echo "Checking title: $TITLE"
+        echo "Against regex: $REGEX"
+        
+        if [[ "$TITLE" =~ $REGEX ]]; then
+          echo "Title is valid!"
+          echo "valid=true" >> $GITHUB_OUTPUT
+          echo "error_message=" >> $GITHUB_OUTPUT
+        else
+          echo "Title does not match conventional commit format"
+          ERROR_MSG="Title does not match required conventional commit format. Expected format: <type>[(scope)]: [KAN-XXX] <description>
+
+Examples:
+  - feat: [KAN-123] Add new feature
+  - fix(api): [KAN-456] Fix authentication bug
+  - docs: Update README
+  - chore(deps): Update dependencies
+
+Valid types: build, chore, ci, config, docs, feat, fix, perf, refactor, revert, style, test
+Scope: Optional, alphanumeric
+Kanban reference: Optional, format [KAN-XXX]"
+          
+          echo "valid=false" >> $GITHUB_OUTPUT
+          echo "error_message<<EOF" >> $GITHUB_OUTPUT
+          echo "$ERROR_MSG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          exit 1
+        fi
